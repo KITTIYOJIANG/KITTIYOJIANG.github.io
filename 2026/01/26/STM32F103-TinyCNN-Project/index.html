@@ -4,21 +4,23 @@
   <meta charset="utf-8">
   
   
-  <title>全国大学生智能车竞赛 | GOH ZE XUAN&#39;s Playground</title>
+  <title>硬核！纯C语言在STM32F103上从零手写卷积神经网络 (TinyCNN) | GOH ZE XUAN&#39;s Playground</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="项目简介这是一个基于&#x3D;&#x3D;的视觉巡线小车项目。我独立完成了硬件选型、PCB 绘制以及 PID 控制算法的编写。 核心技术点 主控芯片: STM32F103C8T6 控制算法: 增量式 PID 控制 传感器: 5路灰度传感器 + MPU6050  演示视频(这里以后可以放 B 站链接) 代码片段 (PID 实现)float PID_Calc(PID *pid, float refe">
+  <meta name="description" content="项目简介 (Project Overview)在资源极度受限的 STM32F103C8T6 (Cortex-M3, 72MHz, 无FPU) 上，我成功部署了一个手写数字识别系统。 不同于使用 ST 官方的 X-CUBE-AI（F103 不支持）或 MicroPython，本项目从零开始用纯 C 语言实现了卷积神经网络 (CNN) 的底层算子（卷积、池化、全连接），并在单片机上完成了端到端的推理。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="全国大学生智能车竞赛">
-<meta property="og:url" content="http://example.com/2025/12/13/My-STM32-Project/index.html">
+<meta property="og:title" content="硬核！纯C语言在STM32F103上从零手写卷积神经网络 (TinyCNN)">
+<meta property="og:url" content="http://example.com/2026/01/26/STM32F103-TinyCNN-Project/index.html">
 <meta property="og:site_name" content="GOH ZE XUAN&#39;s Playground">
-<meta property="og:description" content="项目简介这是一个基于&#x3D;&#x3D;的视觉巡线小车项目。我独立完成了硬件选型、PCB 绘制以及 PID 控制算法的编写。 核心技术点 主控芯片: STM32F103C8T6 控制算法: 增量式 PID 控制 传感器: 5路灰度传感器 + MPU6050  演示视频(这里以后可以放 B 站链接) 代码片段 (PID 实现)float PID_Calc(PID *pid, float refe">
+<meta property="og:description" content="项目简介 (Project Overview)在资源极度受限的 STM32F103C8T6 (Cortex-M3, 72MHz, 无FPU) 上，我成功部署了一个手写数字识别系统。 不同于使用 ST 官方的 X-CUBE-AI（F103 不支持）或 MicroPython，本项目从零开始用纯 C 语言实现了卷积神经网络 (CNN) 的底层算子（卷积、池化、全连接），并在单片机上完成了端到端的推理。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-12-13T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-13T04:06:55.138Z">
+<meta property="article:published_time" content="2026-01-26T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-26T03:38:30.782Z">
 <meta property="article:author" content="GOH ZE XUAN">
 <meta property="article:tag" content="STM32">
-<meta property="article:tag" content="PID">
-<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="Embedded AI">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="TinyML">
+<meta property="article:tag" content="CNN">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="GOH ZE XUAN's Playground" type="application/atom+xml">
@@ -80,14 +82,14 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-My-STM32-Project" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-STM32F103-TinyCNN-Project" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/12/13/My-STM32-Project/" class="article-date">
-  <time class="dt-published" datetime="2025-12-13T04:00:00.000Z" itemprop="datePublished">2025-12-13</time>
+    <a href="/2026/01/26/STM32F103-TinyCNN-Project/" class="article-date">
+  <time class="dt-published" datetime="2026-01-26T04:00:00.000Z" itemprop="datePublished">2026-01-26</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/">项目作品</a>
+    <a class="article-category-link" href="/categories/Embedded-Projects/">Embedded Projects</a>
   </div>
 
   </div>
@@ -98,7 +100,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      全国大学生智能车竞赛
+      硬核！纯C语言在STM32F103上从零手写卷积神经网络 (TinyCNN)
     </h1>
   
 
@@ -106,28 +108,52 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h2><p>这是一个基于&#x3D;&#x3D;的视觉巡线小车项目。我独立完成了硬件选型、PCB 绘制以及 PID 控制算法的编写。</p>
-<h2 id="核心技术点"><a href="#核心技术点" class="headerlink" title="核心技术点"></a>核心技术点</h2><ul>
-<li><strong>主控芯片</strong>: STM32F103C8T6</li>
-<li><strong>控制算法</strong>: 增量式 PID 控制</li>
-<li><strong>传感器</strong>: 5路灰度传感器 + MPU6050</li>
+        <h2 id="项目简介-Project-Overview"><a href="#项目简介-Project-Overview" class="headerlink" title="项目简介 (Project Overview)"></a>项目简介 (Project Overview)</h2><p>在资源极度受限的 <strong>STM32F103C8T6</strong> (Cortex-M3, 72MHz, 无FPU) 上，我成功部署了一个手写数字识别系统。</p>
+<p>不同于使用 ST 官方的 X-CUBE-AI（F103 不支持）或 MicroPython，本项目<strong>从零开始用纯 C 语言</strong>实现了卷积神经网络 (CNN) 的底层算子（卷积、池化、全连接），并在单片机上完成了端到端的推理。</p>
+<h3 id="核心参数-Key-Specs"><a href="#核心参数-Key-Specs" class="headerlink" title="核心参数 (Key Specs)"></a>核心参数 (Key Specs)</h3><ul>
+<li><strong>硬件</strong>: STM32F103C8T6 + USB转TTL + 自制 Python 画板</li>
+<li><strong>模型</strong>: PyTorch 训练的 2层卷积 + 1层全连接 TinyCNN</li>
+<li><strong>性能</strong>: 推理耗时 <strong>220ms</strong> &#x2F; 准确率 <strong>&gt;98%</strong></li>
+<li><strong>资源</strong>: Flash占用 &lt;20KB, RAM占用 &lt;5KB (手动优化内存管理)</li>
 </ul>
-<h2 id="演示视频"><a href="#演示视频" class="headerlink" title="演示视频"></a>演示视频</h2><p><em>(这里以后可以放 B 站链接)</em></p>
-<h2 id="代码片段-PID-实现"><a href="#代码片段-PID-实现" class="headerlink" title="代码片段 (PID 实现)"></a>代码片段 (PID 实现)</h2><pre><code class="c">float PID_Calc(PID *pid, float reference, float feedback) &#123;
-    pid-&gt;error = reference - feedback;
-    // ... 此处省略具体算法
-    return output;
+<hr>
+<h2 id="演示视频-Demo"><a href="#演示视频-Demo" class="headerlink" title="演示视频 (Demo)"></a>演示视频 (Demo)</h2><p>这是实际运行效果。我在电脑端的 Python 画板上手写数字，通过串口实时发送给 STM32，单片机推理完成后返回识别结果。</p>
+<video src="/videos/stm32_demo.avi" controls="controls" width="100%">
+您的浏览器不支持 video 标签。
+</video>
+
+<p><em>(或者如果你把视频发到了 Bilibili&#x2F;YouTube，可以直接贴 iframe 代码)</em></p>
+<hr>
+<h2 id="系统架构-Architecture"><a href="#系统架构-Architecture" class="headerlink" title="系统架构 (Architecture)"></a>系统架构 (Architecture)</h2><ol>
+<li><strong>模型训练 (Training)</strong>: 使用 PyTorch 在 PC 端训练 MNIST 数据集，并将权重导出为 C 语言头文件 (<code>weights.h</code>)。</li>
+<li><strong>数据通信 (Communication)</strong>: Python 上位机通过串口 (UART, 115200 baud) 将 28x28 像素的二值化图像数据 (784 bytes) 发送给 MCU。</li>
+<li><strong>推理引擎 (Inference Engine)</strong>: 在 MCU 上运行手写的 C 语言推理代码，包含 <code>Conv2d</code>, <code>MaxPool2d</code>, <code>ReLU</code>, <code>FullyConnected</code> 等算子。</li>
+</ol>
+<hr>
+<h2 id="遇到的挑战与解决方案-The-“Hard”-Parts"><a href="#遇到的挑战与解决方案-The-“Hard”-Parts" class="headerlink" title="遇到的挑战与解决方案 (The “Hard” Parts)"></a>遇到的挑战与解决方案 (The “Hard” Parts)</h2><h3 id="1-F103-不支持-AI-库"><a href="#1-F103-不支持-AI-库" class="headerlink" title="1. F103 不支持 AI 库"></a>1. F103 不支持 AI 库</h3><p><strong>问题</strong>: STM32F103 是老款 Cortex-M3 内核，不支持 ST 的 X-CUBE-AI 扩展包。<br><strong>解决</strong>: <strong>手写算子</strong>。我复现了深度学习的前向传播过程。为了节省内存，我没有使用动态内存分配 (malloc)，而是使用了静态全局缓冲 (Static Buffers) 并复用内存块。</p>
+<h3 id="2-栈溢出-Stack-Overflow"><a href="#2-栈溢出-Stack-Overflow" class="headerlink" title="2. 栈溢出 (Stack Overflow)"></a>2. 栈溢出 (Stack Overflow)</h3><p><strong>问题</strong>: 神经网络推理过程中产生的临时数组会导致 1KB 的默认栈空间瞬间爆炸，程序进入 HardFault。<br><strong>解决</strong>: 修改启动文件 <code>startup_stm32f103xb.s</code>，将栈空间 (<code>Stack_Size</code>) 调整为 **4KB (0x1000)**，确保了系统的稳定性。</p>
+<h3 id="3-通信与数据预处理"><a href="#3-通信与数据预处理" class="headerlink" title="3. 通信与数据预处理"></a>3. 通信与数据预处理</h3><p><strong>问题</strong>: 简单的图像缩放会导致识别率低。<br><strong>解决</strong>: 在 Python 端增加了<strong>自动居中 (Auto-centering)</strong> 和 <strong>二值化锐化</strong> 算法，模拟 MNIST 数据集的格式，显著提升了“潦草字迹”的识别率。</p>
+<hr>
+<h2 id="核心代码片段-Code-Showcase"><a href="#核心代码片段-Code-Showcase" class="headerlink" title="核心代码片段 (Code Showcase)"></a>核心代码片段 (Code Showcase)</h2><p>这是我手写的卷积层实现，针对内存进行了优化：</p>
+<pre><code class="c">// 3x3 卷积 + ReLU + MaxPool 融合算子
+void Conv3x3_ReLU_MaxPool2_Fused(
+    const float* input, int in_ch, int in_h, int in_w,
+    float* output, int out_ch,
+    const float* weights, const float* bias) 
+&#123;
+    // ... 代码实现 ...
+    // 这里展示核心逻辑
 &#125;
 </code></pre>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/12/13/My-STM32-Project/" data-id="cmkun33l20000rsv496494kun" data-title="全国大学生智能车竞赛" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2026/01/26/STM32F103-TinyCNN-Project/" data-id="cmkun33l60001rsv4bvq78qcp" data-title="硬核！纯C语言在STM32F103上从零手写卷积神经网络 (TinyCNN)" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PID/" rel="tag">PID</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/STM32/" rel="tag">STM32</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag">嵌入式</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CNN/" rel="tag">CNN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Embedded-AI/" rel="tag">Embedded AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/STM32/" rel="tag">STM32</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TinyML/" rel="tag">TinyML</a></li></ul>
 
     </footer>
   </div>
@@ -135,15 +161,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2025/12/27/fight-against-mediocrity/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Hello, World: 我的对抗平庸指南
-        
-      </div>
-    </a>
   
+    <a href="/2026/01/17/from-pid-to-rl/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">当自动化遇到 AI：为什么我们需要从 PID 走向强化学习？</div>
+    </a>
   
 </nav>
 
