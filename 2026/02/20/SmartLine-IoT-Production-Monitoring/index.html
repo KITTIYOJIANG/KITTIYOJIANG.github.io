@@ -4,22 +4,26 @@
   <meta charset="utf-8">
   
   
-  <title>关于我 (About Me) | ZeXuan.io</title>
+  <title>SmartLine-IoT 工业物联网产线状态监测系统 | ZeXuan.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="👋 你好，我是吴则勋 (GOH ZE XUAN)。 我来自马来西亚，目前就读于 北京理工大学自动化专业。我的兴趣集中在机器人控制、嵌入式系统、机器视觉和 TinyML：从底层硬件调试，到算法部署，再到把系统真正跑起来，我最享受的是让代码和机械产生可靠互动的过程。 我正在寻找 2026 暑期实习机会，方向偏自动化、机器人、控制、嵌入式系统或相关工程岗位，期望 Base 北京，也欢迎外企和国际化团队">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于我 (About Me)">
-<meta property="og:url" content="https://kittiyojiang.github.io/about/index.html">
+  <meta name="description" content="一句话成果SmartLine-IoT 是一个面向自动化产线的工业物联网项目，用于展示设备数据采集、状态监测、异常告警和看板展示的系统设计能力。 项目定位 方向: 工业物联网与自动化系统 关注点: 设备状态、传感器数据、异常告警、可视化看板 能力展示: 系统架构设计、数据链路拆解、工程化表达 当前状态: 已补充系统架构整理图、Grafana 看板录屏和外部演示链接；后续补充代码和报告">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SmartLine-IoT 工业物联网产线状态监测系统">
+<meta property="og:url" content="https://kittiyojiang.github.io/2026/02/20/SmartLine-IoT-Production-Monitoring/index.html">
 <meta property="og:site_name" content="ZeXuan.io">
-<meta property="og:description" content="👋 你好，我是吴则勋 (GOH ZE XUAN)。 我来自马来西亚，目前就读于 北京理工大学自动化专业。我的兴趣集中在机器人控制、嵌入式系统、机器视觉和 TinyML：从底层硬件调试，到算法部署，再到把系统真正跑起来，我最享受的是让代码和机械产生可靠互动的过程。 我正在寻找 2026 暑期实习机会，方向偏自动化、机器人、控制、嵌入式系统或相关工程岗位，期望 Base 北京，也欢迎外企和国际化团队">
+<meta property="og:description" content="一句话成果SmartLine-IoT 是一个面向自动化产线的工业物联网项目，用于展示设备数据采集、状态监测、异常告警和看板展示的系统设计能力。 项目定位 方向: 工业物联网与自动化系统 关注点: 设备状态、传感器数据、异常告警、可视化看板 能力展示: 系统架构设计、数据链路拆解、工程化表达 当前状态: 已补充系统架构整理图、Grafana 看板录屏和外部演示链接；后续补充代码和报告">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kittiyojiang.github.io/images/mechanical/exoskeleton-solidworks.png">
-<meta property="article:published_time" content="2026-03-17T05:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-04T09:57:53.147Z">
+<meta property="og:image" content="https://kittiyojiang.github.io/images/smartline/architecture.svg">
+<meta property="article:published_time" content="2026-02-20T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-05T05:51:58.460Z">
 <meta property="article:author" content="GOH ZE XUAN">
-<meta property="article:tag" content="STM32, TinyML, Robot Control, Embedded Systems, ROS, Automation, Portfolio">
+<meta property="article:tag" content="IIoT">
+<meta property="article:tag" content="Automation">
+<meta property="article:tag" content="Dashboard">
+<meta property="article:tag" content="Sensor Data">
+<meta property="article:tag" content="Monitoring">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kittiyojiang.github.io/images/mechanical/exoskeleton-solidworks.png">
+<meta name="twitter:image" content="https://kittiyojiang.github.io/images/smartline/architecture.svg">
   
   
     <link rel="shortcut icon" href="/favicon.svg">
@@ -86,12 +90,16 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-SmartLine-IoT-Production-Monitoring" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/about/index.html" class="article-date">
-  <time class="dt-published" datetime="2026-03-17T05:00:00.000Z" itemprop="datePublished">2026-03-17</time>
+    <a href="/2026/02/20/SmartLine-IoT-Production-Monitoring/" class="article-date">
+  <time class="dt-published" datetime="2026-02-20T04:00:00.000Z" itemprop="datePublished">2026-02-20</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Portfolio/">Portfolio</a>►<a class="article-category-link" href="/categories/Portfolio/Industrial-IoT/">Industrial IoT</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -100,7 +108,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      关于我 (About Me)
+      SmartLine-IoT 工业物联网产线状态监测系统
     </h1>
   
 
@@ -108,49 +116,82 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>👋 <strong>你好，我是吴则勋 (GOH ZE XUAN)。</strong></p>
-<p>我来自马来西亚，目前就读于 <strong>北京理工大学自动化专业</strong>。我的兴趣集中在机器人控制、嵌入式系统、机器视觉和 TinyML：从底层硬件调试，到算法部署，再到把系统真正跑起来，我最享受的是让代码和机械产生可靠互动的过程。</p>
-<p>我正在寻找 <strong>2026 暑期实习机会</strong>，方向偏自动化、机器人、控制、嵌入式系统或相关工程岗位，期望 Base 北京，也欢迎外企和国际化团队。</p>
+        <h2 id="一句话成果"><a href="#一句话成果" class="headerlink" title="一句话成果"></a>一句话成果</h2><p>SmartLine-IoT 是一个面向自动化产线的工业物联网项目，用于展示设备数据采集、状态监测、异常告警和看板展示的系统设计能力。</p>
+<h3 id="项目定位"><a href="#项目定位" class="headerlink" title="项目定位"></a>项目定位</h3><ul>
+<li><strong>方向:</strong> 工业物联网与自动化系统</li>
+<li><strong>关注点:</strong> 设备状态、传感器数据、异常告警、可视化看板</li>
+<li><strong>能力展示:</strong> 系统架构设计、数据链路拆解、工程化表达</li>
+<li><strong>当前状态:</strong> 已补充系统架构整理图、Grafana 看板录屏和外部演示链接；后续补充代码和报告</li>
+</ul>
 <span id="more"></span>
 
 <hr>
-<h2 id="技术栈-Tech-Stack"><a href="#技术栈-Tech-Stack" class="headerlink" title="技术栈 (Tech Stack)"></a>技术栈 (Tech Stack)</h2><ul>
-<li><strong>嵌入式与底层驱动:</strong> STM32 外设控制、串口通信、资源受限设备上的 C 语言开发。</li>
-<li><strong>机器人与仿真:</strong> ROS&#x2F;ROS2 学习与实践，Webots 仿真环境，移动机器人导航与控制。</li>
-<li><strong>控制与算法:</strong> PID 控制、TinyML 推理部署、Python 数据处理与上位机工具。</li>
-<li><strong>机械设计:</strong> SolidWorks 建模与结构设计，正在推进外骨骼机械臂相关实践。</li>
-<li><strong>工业系统:</strong> SmartLine-IoT 工业物联网项目经验，关注设备数据采集、状态监控与告警链路。</li>
+<h2 id="Demo-视频"><a href="#Demo-视频" class="headerlink" title="Demo 视频"></a>Demo 视频</h2><p>下面是本地 Grafana 录屏，展示 DHT11 环境监控曲线、查询配置和 Dashboard 面板编辑过程。</p>
+<video controls preload="metadata" poster="/images/smartline/grafana-dashboard-poster.jpg" style="width:100%;border-radius:8px;border:1px solid #ddd;background:#111;">
+  <source src="/videos/smartline/grafana-dashboard-demo.mp4" type="video/mp4">
+  当前浏览器不支持内嵌视频播放。
+</video>
+
+<p>完整外部演示也可以通过小红书查看：<a target="_blank" rel="noopener" href="http://xhslink.com/o/1NOE8FqMNuK">小红书笔记</a>。</p>
+<hr>
+<h2 id="系统架构图"><a href="#系统架构图" class="headerlink" title="系统架构图"></a>系统架构图</h2><p>这张图是根据项目设计整理出的架构图，用来说明设备层、采集层、服务层和展示层之间的数据流，不是实际运行截图。</p>
+<p><img src="/images/smartline/architecture.svg" alt="SmartLine-IoT architecture diagram"></p>
+<hr>
+<h2 id="我的职责"><a href="#我的职责" class="headerlink" title="我的职责"></a>我的职责</h2><ul>
+<li>梳理产线设备侧、数据采集侧和上位机看板之间的模块边界。</li>
+<li>设计设备状态字段，包括运行、停止、异常、维护等基础状态。</li>
+<li>规划告警链路，让异常能够从设备侧传到看板侧，并保留后续扩展空间。</li>
+<li>整理工业系统中“可观测、可追踪、可维护”的设计思路。</li>
 </ul>
 <hr>
-<h2 id="作品集重点"><a href="#作品集重点" class="headerlink" title="作品集重点"></a>作品集重点</h2><ul>
-<li><a href="/2026/01/26/STM32F103-TinyCNN-Project/">STM32F103 TinyCNN 手写数字识别</a>：在 Cortex-M3、无 FPU 的低资源单片机上用纯 C 手写 CNN 推理，推理耗时约 220ms。</li>
-<li><a href="/2026/03/10/Webots-ROS2-Robot-Navigation/">Webots + ROS2 移动机器人导航仿真</a>：展示机器人仿真、Nav2 运行证据、导航流程和控制模块拆解；代码见 <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/ros2_nav">ros2_nav</a>。</li>
-<li><a href="/2026/02/20/SmartLine-IoT-Production-Monitoring/">SmartLine-IoT 工业物联网产线监测系统</a>：展示工业设备数据采集、状态看板和告警架构设计。</li>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><ol>
+<li><strong>设备层:</strong> 传感器、执行器、控制器或 PLC 采集现场状态。</li>
+<li><strong>采集层:</strong> 将设备数据转换为统一字段，准备上传或本地缓存。</li>
+<li><strong>服务层:</strong> 处理设备状态、告警事件和历史记录。</li>
+<li><strong>展示层:</strong> 通过 Dashboard 展示产线状态、设备健康度和异常列表。</li>
+</ol>
+<hr>
+<h2 id="已补充材料与待补充证据"><a href="#已补充材料与待补充证据" class="headerlink" title="已补充材料与待补充证据"></a>已补充材料与待补充证据</h2><ul>
+<li><strong>已补充:</strong> 系统架构整理图、Grafana 看板录屏、小红书演示链接。</li>
+<li><strong>代码:</strong> 后续补充数据采集、接口或 Dashboard 仓库链接。</li>
+<li><strong>报告:</strong> 后续补充更完整的模块说明。</li>
+<li><strong>指标:</strong> 补充刷新频率、告警延迟、设备数量等量化指标。</li>
 </ul>
 <hr>
-<h2 id="工程补充素材"><a href="#工程补充素材" class="headerlink" title="工程补充素材"></a>工程补充素材</h2><p>这张 SolidWorks 外骨骼结构图来自本地工程资料，用来补足作品集中“机械结构设计”的证据维度。</p>
-<p><img src="/images/mechanical/exoskeleton-solidworks.png" alt="SolidWorks exoskeleton mechanical arm design"></p>
-<hr>
-<h2 id="Beyond-the-Code"><a href="#Beyond-the-Code" class="headerlink" title="Beyond the Code"></a>Beyond the Code</h2><p>我喜欢骑行、力量训练、游泳，也喜欢把技术学习过程记录下来。对我来说，作品集不只是项目列表，也是持续复盘、表达和吸引同频合作者的方式。</p>
-<hr>
-<h2 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h2><ul>
-<li><strong>GitHub:</strong> <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG">KITTIYOJIANG</a></li>
-<li><strong>工程仓库:</strong> <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/ros2_nav">ros2_nav</a> &#x2F; <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/mini-robotics">mini-robotics</a></li>
-<li><strong>在线简历:</strong> <a href="/resume/">Resume</a></li>
-<li><strong>WeChat:</strong> <code>g_zxuan913</code></li>
-</ul>
+<h2 id="这个项目想证明什么"><a href="#这个项目想证明什么" class="headerlink" title="这个项目想证明什么"></a>这个项目想证明什么</h2><p>这个项目适合用来展示我对工业自动化系统的整体理解：不仅关注单个功能能不能跑，也关注数据如何被采集、状态如何被解释、异常如何被发现，以及后续如何维护。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kittiyojiang.github.io/about/index.html" data-id="cmq0id66h0000j0v47gv75tsd" data-title="关于我 (About Me)" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://kittiyojiang.github.io/2026/02/20/SmartLine-IoT-Production-Monitoring/" data-id="cmq0id66q0007j0v45ax46ycg" data-title="SmartLine-IoT 工业物联网产线状态监测系统" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Automation/" rel="tag">Automation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dashboard/" rel="tag">Dashboard</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IIoT/" rel="tag">IIoT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monitoring/" rel="tag">Monitoring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sensor-Data/" rel="tag">Sensor Data</a></li></ul>
+
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/2026/03/10/Webots-ROS2-Robot-Navigation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Webots + ROS2 移动机器人导航仿真
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/01/26/STM32F103-TinyCNN-Project/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">STM32F103 TinyCNN 手写数字识别</div>
+    </a>
+  
+</nav>
+
   
 </article>
 
