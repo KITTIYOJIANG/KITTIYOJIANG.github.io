@@ -6,16 +6,16 @@
   
   <title>SmartLine-IoT 工业物联网产线状态监测系统 | ZeXuan.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="一句话成果SmartLine-IoT 是一个面向自动化产线的工业物联网项目，用于展示设备数据采集、状态监测、异常告警和看板展示的系统设计能力。 项目定位 方向: 工业物联网与自动化系统 关注点: 设备状态、传感器数据、异常告警、可视化看板 能力展示: 系统架构设计、数据链路拆解、工程化表达 当前状态: 已补充系统架构整理图、Grafana 看板录屏和外部演示链接；后续补充代码和报告">
+  <meta name="description" content="一句话成果SmartLine-IoT 是一个面向自动化产线的工业物联网项目，用于展示设备数据采集、状态监测、异常告警和看板展示的系统设计能力。 项目定位 方向: 工业物联网与自动化系统 关注点: 设备状态、传感器数据、异常告警、可视化看板 能力展示: 系统架构设计、数据链路拆解、工程化表达 GitHub: KITTIYOJIANG&#x2F;iot_project 当前状态: 已补充系统架构图、G">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SmartLine-IoT 工业物联网产线状态监测系统">
 <meta property="og:url" content="https://kittiyojiang.github.io/2026/02/20/SmartLine-IoT-Production-Monitoring/index.html">
 <meta property="og:site_name" content="ZeXuan.io">
-<meta property="og:description" content="一句话成果SmartLine-IoT 是一个面向自动化产线的工业物联网项目，用于展示设备数据采集、状态监测、异常告警和看板展示的系统设计能力。 项目定位 方向: 工业物联网与自动化系统 关注点: 设备状态、传感器数据、异常告警、可视化看板 能力展示: 系统架构设计、数据链路拆解、工程化表达 当前状态: 已补充系统架构整理图、Grafana 看板录屏和外部演示链接；后续补充代码和报告">
+<meta property="og:description" content="一句话成果SmartLine-IoT 是一个面向自动化产线的工业物联网项目，用于展示设备数据采集、状态监测、异常告警和看板展示的系统设计能力。 项目定位 方向: 工业物联网与自动化系统 关注点: 设备状态、传感器数据、异常告警、可视化看板 能力展示: 系统架构设计、数据链路拆解、工程化表达 GitHub: KITTIYOJIANG&#x2F;iot_project 当前状态: 已补充系统架构图、G">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kittiyojiang.github.io/images/smartline/architecture.svg">
 <meta property="article:published_time" content="2026-02-20T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-05T05:51:58.460Z">
+<meta property="article:modified_time" content="2026-06-08T12:40:47.139Z">
 <meta property="article:author" content="GOH ZE XUAN">
 <meta property="article:tag" content="IIoT">
 <meta property="article:tag" content="Automation">
@@ -121,7 +121,8 @@
 <li><strong>方向:</strong> 工业物联网与自动化系统</li>
 <li><strong>关注点:</strong> 设备状态、传感器数据、异常告警、可视化看板</li>
 <li><strong>能力展示:</strong> 系统架构设计、数据链路拆解、工程化表达</li>
-<li><strong>当前状态:</strong> 已补充系统架构整理图、Grafana 看板录屏和外部演示链接；后续补充代码和报告</li>
+<li><strong>GitHub:</strong> <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/iot_project">KITTIYOJIANG&#x2F;iot_project</a></li>
+<li><strong>当前状态:</strong> 已补充系统架构图、Grafana 看板录屏、小红书演示链接和代码仓库</li>
 </ul>
 <span id="more"></span>
 
@@ -151,11 +152,12 @@
 <li><strong>展示层:</strong> 通过 Dashboard 展示产线状态、设备健康度和异常列表。</li>
 </ol>
 <hr>
-<h2 id="已补充材料与待补充证据"><a href="#已补充材料与待补充证据" class="headerlink" title="已补充材料与待补充证据"></a>已补充材料与待补充证据</h2><ul>
-<li><strong>已补充:</strong> 系统架构整理图、Grafana 看板录屏、小红书演示链接。</li>
-<li><strong>代码:</strong> 后续补充数据采集、接口或 Dashboard 仓库链接。</li>
-<li><strong>报告:</strong> 后续补充更完整的模块说明。</li>
-<li><strong>指标:</strong> 补充刷新频率、告警延迟、设备数量等量化指标。</li>
+<h2 id="工程材料"><a href="#工程材料" class="headerlink" title="工程材料"></a>工程材料</h2><ul>
+<li><strong>代码仓库:</strong> <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/iot_project">KITTIYOJIANG&#x2F;iot_project</a></li>
+<li><strong>上位机与服务端:</strong> <code>web_app.py</code>、<code>backend_core.py</code>、<code>gateway_device.py</code>、<code>sniper_core.py</code></li>
+<li><strong>通信与部署:</strong> MQTT &#x2F; Mosquitto &#x2F; Docker Compose &#x2F; SQLite &#x2F; Python requirements</li>
+<li><strong>嵌入式节点:</strong> 本地工程包含 <code>embed/IoT_Node_STM32</code> 与 STM32 SmartLine 工程，用于设备侧数据采集与控制逻辑</li>
+<li><strong>演示材料:</strong> 本页 Grafana 录屏、小红书演示链接、系统架构整理图、项目 PPT</li>
 </ul>
 <hr>
 <h2 id="这个项目想证明什么"><a href="#这个项目想证明什么" class="headerlink" title="这个项目想证明什么"></a>这个项目想证明什么</h2><p>这个项目适合用来展示我对工业自动化系统的整体理解：不仅关注单个功能能不能跑，也关注数据如何被采集、状态如何被解释、异常如何被发现，以及后续如何维护。</p>
@@ -163,7 +165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kittiyojiang.github.io/2026/02/20/SmartLine-IoT-Production-Monitoring/" data-id="cmq0id66q0007j0v45ax46ycg" data-title="SmartLine-IoT 工业物联网产线状态监测系统" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://kittiyojiang.github.io/2026/02/20/SmartLine-IoT-Production-Monitoring/" data-id="cmq57g4ya0007rgv4f7ud17ut" data-title="SmartLine-IoT 工业物联网产线状态监测系统" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       

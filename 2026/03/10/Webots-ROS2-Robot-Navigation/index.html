@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://kittiyojiang.github.io/images/webots/robot-sensors.png">
 <meta property="og:image" content="https://kittiyojiang.github.io/images/webots/push-box-goal.png">
 <meta property="article:published_time" content="2026-03-10T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-05T05:27:41.838Z">
+<meta property="article:modified_time" content="2026-06-08T12:45:14.386Z">
 <meta property="article:author" content="GOH ZE XUAN">
 <meta property="article:tag" content="ROS2">
 <meta property="article:tag" content="Webots">
@@ -128,7 +128,7 @@
 <li><strong>工具:</strong> ROS2 Humble、Nav2、TurtleBot3、Gazebo&#x2F;Webots、RViz、SLAM Toolbox</li>
 <li><strong>能力展示:</strong> 仿真环境搭建、ROS2 节点调试、TF&#x2F;Topic 证据整理、导航链路拆解</li>
 <li><strong>GitHub:</strong> <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/ros2_nav">KITTIYOJIANG&#x2F;ros2_nav</a></li>
-<li><strong>当前状态:</strong> 已补充本地运行证据图；没有找到可用本地工程视频，所以暂不嵌入本地视频，后续可补录完整导航演示</li>
+<li><strong>当前状态:</strong> 已补充 RViz&#x2F;SLAM 录屏、真实 Gazebo + Nav2 action 成功日志、ROS bag 与量化指标</li>
 </ul>
 <span id="more"></span>
 
@@ -136,8 +136,14 @@
 <h2 id="快速入口"><a href="#快速入口" class="headerlink" title="快速入口"></a>快速入口</h2><ul>
 <li><strong>代码仓库:</strong> <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/ros2_nav">github.com&#x2F;KITTIYOJIANG&#x2F;ros2_nav</a></li>
 <li><strong>项目总览:</strong> <a href="/portfolio/">作品集 Portfolio</a></li>
-<li><strong>重点证据:</strong> Nav2 lifecycle active、26 nodes、62 topics、导航 goal accepted、1169 条 ROS bag 消息</li>
+<li><strong>重点证据:</strong> <code>/navigate_to_pose</code> SUCCEEDED、0 次 recovery、6753 条 ROS bag 消息、真实 Gazebo + Nav2 运行视频</li>
 </ul>
+<h2 id="真实-Gazebo-Nav2-运行视频"><a href="#真实-Gazebo-Nav2-运行视频" class="headerlink" title="真实 Gazebo + Nav2 运行视频"></a>真实 Gazebo + Nav2 运行视频</h2><p>这段视频由真实 Gazebo&#x2F;Nav2 rosbag 渲染：蓝色机器人位姿来自 <code>/odom</code>，绿色点来自 <code>/scan</code>，紫色路径来自 Nav2 <code>/plan</code>，红色轨迹来自实际行驶里程计，速度条来自 <code>/cmd_vel</code>。</p>
+<video controls preload="metadata" poster="/images/ros2-nav2/real-gazebo-nav2-run-preview.png" style="width:100%;border-radius:8px;border:1px solid #ddd;background:#111;">
+  <source src="/videos/ros2/real-gazebo-nav2-run.mp4" type="video/mp4">
+  当前浏览器不支持内嵌视频播放。
+</video>
+
 <h2 id="Demo-证据"><a href="#Demo-证据" class="headerlink" title="Demo 证据"></a>Demo 证据</h2><p><img src="/images/ros2-nav2/readme_banner.png" alt="ROS2 Nav2 TurtleBot3 demo evidence banner"></p>
 <table>
 <thead>
@@ -164,28 +170,40 @@
 <td>ROS2 Humble on WSL Ubuntu 22.04</td>
 </tr>
 <tr>
-<td>Nav2 lifecycle</td>
-<td><code>map_server</code>、<code>amcl</code>、<code>controller_server</code>、<code>planner_server</code>、<code>bt_navigator</code> 等节点达到 <code>active [3]</code></td>
+<td>真实仿真</td>
+<td>Gazebo Classic 运行 <code>turtlebot3_world.launch.py</code>，Nav2 运行 <code>bringup_launch.py</code></td>
 </tr>
 <tr>
 <td>导航 action</td>
-<td><code>/navigate_to_pose</code> goal accepted</td>
+<td><code>/navigate_to_pose</code> 最终状态 <code>SUCCEEDED</code></td>
+</tr>
+<tr>
+<td>导航耗时</td>
+<td>action feedback 记录 <code>navigation_time = 12.6s</code></td>
+</tr>
+<tr>
+<td>恢复行为</td>
+<td><code>number_of_recoveries = 0</code>，导航过程未触发 recovery 行为</td>
+</tr>
+<tr>
+<td>运动距离</td>
+<td>odom 从 <code>(-1.990, -0.500)</code> 到 <code>(0.366, 0.474)</code>，位移约 <code>2.55m</code></td>
 </tr>
 <tr>
 <td>ROS bag</td>
-<td>约 29.4 秒，1169 条消息</td>
+<td>约 <code>69.6s</code>，共 <code>6753</code> 条消息，bag 大小约 <code>4.9 MiB</code></td>
 </tr>
 <tr>
-<td>节点与话题</td>
-<td>26 个 nodes，62 个 topics</td>
+<td>关键话题</td>
+<td><code>/odom</code> 1906、<code>/scan</code> 324、<code>/cmd_vel</code> 331、<code>/plan</code> 15、<code>/tf</code> 3489</td>
 </tr>
 <tr>
-<td>地图</td>
-<td><code>map_turtlebot3_world.yaml/.pgm/.png</code>，分辨率 <code>0.05 m/cell</code></td>
+<td>规划输出</td>
+<td>首次 <code>/plan</code> 含 135 个 poses，持续捕获路径与速度命令</td>
 </tr>
 <tr>
-<td>运动输出</td>
-<td>捕获 <code>/plan</code>、<code>/local_plan</code>、<code>/cmd_vel</code>、<code>/cmd_vel_nav</code></td>
+<td>传感器反馈</td>
+<td>首帧 LaserScan 有 325 个有限距离点，最近障碍物距离约 <code>0.497m</code></td>
 </tr>
 </tbody></table>
 <hr>
@@ -225,18 +243,14 @@
 <li><strong>验证方法:</strong> 通过 lifecycle 状态、topic 输出、TF 结构、路径规划结果和速度命令验证系统是否跑通。</li>
 </ol>
 <hr>
-<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><ul>
-<li><strong>视频:</strong> 补录机器人从起点到目标点的完整导航演示。</li>
-<li><strong>指标:</strong> 继续补充路径长度、到达时间、碰撞次数和控制误差等量化数据。</li>
-<li><strong>工程整理:</strong> 将 Webots 场景、SLAM 建图记录和 Nav2 运行证据进一步统一到同一个 README 结构里。</li>
-</ul>
+<h2 id="工程整理"><a href="#工程整理" class="headerlink" title="工程整理"></a>工程整理</h2><p>项目仓库已经把 Webots&#x2F;SLAM 截图、Nav2 运行结果、rosbag、TF 树和技术报告统一到 README 与 <code>demo/</code>、<code>docs/</code> 目录中。页面这里只保留对招聘方最有用的证据摘要，完整材料见 <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/ros2_nav">ros2_nav 仓库</a>。</p>
 <hr>
 <h2 id="这个项目想证明什么"><a href="#这个项目想证明什么" class="headerlink" title="这个项目想证明什么"></a>这个项目想证明什么</h2><p>招聘方看这个项目时，重点不是“只放一张仿真截图”，而是能看到我在机器人系统里拆问题的方式：环境、数据、定位、规划、控制、验证，每一层都能单独定位问题，也能组合成完整链路。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kittiyojiang.github.io/2026/03/10/Webots-ROS2-Robot-Navigation/" data-id="cmq0id66l0002j0v4fd4egkp5" data-title="Webots + ROS2 移动机器人导航仿真" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://kittiyojiang.github.io/2026/03/10/Webots-ROS2-Robot-Navigation/" data-id="cmq57g4y40001rgv436ed9qvo" data-title="Webots + ROS2 移动机器人导航仿真" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
