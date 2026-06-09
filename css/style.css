@@ -1493,8 +1493,10 @@ pre .javascript .function {
   }
   .article,
   .article-inner {
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
+    width: 360px !important;
+    max-width: 360px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     overflow: hidden;
   }
   .article-header,
