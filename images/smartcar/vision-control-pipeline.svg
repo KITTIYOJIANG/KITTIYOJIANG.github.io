@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Smart Car Vision Control Pipeline</title>
+  <desc id="desc">Pipeline diagram from SmartCar VR display and OpenMV image tuning through map parsing, Sokoban planning, JSON commands, and vehicle controller execution.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f9f"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="520" fill="#f6f8fb"/>
+  <text x="70" y="68" fill="#17324d" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">Vision-to-Control Pipeline</text>
+  <text x="70" y="100" fill="#5a7086" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">From bright screen images to grid maps, plans, JSON commands, and real-car execution hooks.</text>
+
+  <g font-family="Inter, Segoe UI, Arial, sans-serif">
+    <g transform="translate(70 155)">
+      <rect width="184" height="138" rx="8" fill="#ffffff" stroke="#d8e2ec"/>
+      <rect x="22" y="24" width="140" height="78" rx="5" fill="#1d92a8"/>
+      <path d="M 38 82 H 82 V 48 H 120 V 72 H 146" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="square"/>
+      <circle cx="50" cy="92" r="7" fill="#ff5ca8"/>
+      <circle cx="138" cy="82" r="7" fill="#ffd166"/>
+      <text x="92" y="122" text-anchor="middle" fill="#17324d" font-size="15" font-weight="700">SmartCar VR</text>
+    </g>
+
+    <g transform="translate(310 155)">
+      <rect width="184" height="138" rx="8" fill="#ffffff" stroke="#d8e2ec"/>
+      <circle cx="92" cy="58" r="34" fill="#2f6f9f"/>
+      <circle cx="92" cy="58" r="16" fill="#f6f8fb"/>
+      <path d="M 44 104 H 140" stroke="#ff6b35" stroke-width="6" stroke-linecap="round"/>
+      <text x="92" y="122" text-anchor="middle" fill="#17324d" font-size="15" font-weight="700">OpenMV tuning</text>
+    </g>
+
+    <g transform="translate(550 155)">
+      <rect width="184" height="138" rx="8" fill="#ffffff" stroke="#d8e2ec"/>
+      <g stroke="#8aa0b5" stroke-width="1">
+        <path d="M 35 35 H 149 M 35 55 H 149 M 35 75 H 149 M 35 95 H 149"/>
+        <path d="M 35 35 V 95 M 58 35 V 95 M 81 35 V 95 M 104 35 V 95 M 127 35 V 95 M 149 35 V 95"/>
+      </g>
+      <rect x="58" y="55" width="23" height="20" fill="#ffd166"/>
+      <circle cx="127" cy="75" r="9" fill="#7bdff2"/>
+      <text x="92" y="122" text-anchor="middle" fill="#17324d" font-size="15" font-weight="700">16x12 map</text>
+    </g>
+
+    <g transform="translate(790 155)">
+      <rect width="184" height="138" rx="8" fill="#ffffff" stroke="#d8e2ec"/>
+      <path d="M 43 87 C 60 42, 92 42, 111 72 S 140 92, 151 42" fill="none" stroke="#2f6f9f" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="43" cy="87" r="7" fill="#50c878"/>
+      <circle cx="151" cy="42" r="7" fill="#ff6b35"/>
+      <text x="92" y="122" text-anchor="middle" fill="#17324d" font-size="15" font-weight="700">BFS / A*</text>
+    </g>
+
+    <g transform="translate(1030 155)">
+      <rect width="104" height="138" rx="8" fill="#ffffff" stroke="#d8e2ec"/>
+      <text x="52" y="48" text-anchor="middle" fill="#2f6f9f" font-size="13" font-weight="700">JSON</text>
+      <text x="52" y="73" text-anchor="middle" fill="#17324d" font-size="12">move_to</text>
+      <text x="52" y="92" text-anchor="middle" fill="#17324d" font-size="12">align</text>
+      <text x="52" y="111" text-anchor="middle" fill="#17324d" font-size="12">push</text>
+    </g>
+
+    <g fill="none" stroke="#2f6f9f" stroke-width="4" marker-end="url(#arrow)">
+      <path d="M 254 224 H 300"/>
+      <path d="M 494 224 H 540"/>
+      <path d="M 734 224 H 780"/>
+      <path d="M 974 224 H 1020"/>
+    </g>
+
+    <g transform="translate(142 350)">
+      <rect width="920" height="72" rx="8" fill="#e9f2fa" stroke="#cdddea"/>
+      <text x="28" y="30" fill="#17324d" font-size="16" font-weight="700">Current verified baseline</text>
+      <text x="28" y="54" fill="#506982" font-size="14">16 map cases tested: 12 solved, 4 no-solution expected, 0 replay failures. Command consumer: 7/7 validation cases passed.</text>
+    </g>
+  </g>
+</svg>
