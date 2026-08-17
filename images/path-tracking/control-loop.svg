@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" role="img" aria-labelledby="title desc">
+  <title id="title">Path tracking simulator control loop</title>
+  <desc id="desc">A control diagram showing reference path generation, Pure Pursuit and Stanley controllers, bicycle model simulation, and metric evaluation.</desc>
+  <defs>
+    <linearGradient id="road" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; }
+      .panel2 { fill: #ecfeff; stroke: #0f766e; stroke-width: 2; rx: 8; }
+      .title { font: 700 24px Arial, sans-serif; fill: #0f172a; }
+      .label { font: 600 18px Arial, sans-serif; fill: #1e293b; }
+      .small { font: 14px Arial, sans-serif; fill: #475569; }
+      .metric { font: 700 16px Arial, sans-serif; fill: #0f766e; }
+      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .path { fill: none; stroke: url(#road); stroke-width: 8; stroke-linecap: round; stroke-dasharray: 18 12; }
+      .traj { fill: none; stroke: #f97316; stroke-width: 5; stroke-linecap: round; }
+      .car { fill: #111827; }
+      .wheel { fill: #64748b; }
+    </style>
+  </defs>
+  <rect class="bg" width="1120" height="520"/>
+  <text class="title" x="48" y="58">2D Path Tracking: Pure Pursuit vs Stanley</text>
+  <text class="small" x="50" y="84">Kinematic bicycle model, circle / figure-eight paths, CTE and heading-error metrics</text>
+
+  <rect class="panel2" x="52" y="130" width="230" height="118"/>
+  <text class="label" x="78" y="170">Reference Path</text>
+  <text class="small" x="78" y="198">circle / figure-eight</text>
+  <text class="small" x="78" y="220">600-800 waypoints</text>
+
+  <rect class="panel" x="342" y="130" width="230" height="118"/>
+  <text class="label" x="370" y="166">Controller</text>
+  <text class="small" x="370" y="196">Pure Pursuit</text>
+  <text class="small" x="370" y="218">Stanley</text>
+
+  <rect class="panel" x="632" y="130" width="230" height="118"/>
+  <text class="label" x="660" y="166">Vehicle Model</text>
+  <text class="small" x="660" y="196">kinematic bicycle</text>
+  <text class="small" x="660" y="218">x, y, yaw, steer</text>
+
+  <rect class="panel2" x="898" y="130" width="176" height="118"/>
+  <text class="label" x="924" y="166">Metrics</text>
+  <text class="small" x="924" y="196">RMS CTE</text>
+  <text class="small" x="924" y="218">max CTE, heading</text>
+
+  <path class="line" d="M282 189 H332"/>
+  <path class="line" d="M572 189 H622"/>
+  <path class="line" d="M862 189 H888"/>
+  <path class="line" d="M748 248 C748 292 458 292 458 248"/>
+
+  <path class="path" d="M160 390 C260 280 390 452 505 354 S720 262 820 386 S995 426 1042 330"/>
+  <path class="traj" d="M154 408 C270 324 384 424 498 370 S715 292 812 398 S984 410 1034 350"/>
+  <g transform="translate(760 354) rotate(-22)">
+    <rect class="car" x="-32" y="-16" width="64" height="32" rx="6"/>
+    <rect class="wheel" x="-24" y="-23" width="16" height="8" rx="2"/>
+    <rect class="wheel" x="8" y="-23" width="16" height="8" rx="2"/>
+    <rect class="wheel" x="-24" y="15" width="16" height="8" rx="2"/>
+    <rect class="wheel" x="8" y="15" width="16" height="8" rx="2"/>
+  </g>
+
+  <rect class="panel" x="52" y="296" width="330" height="152"/>
+  <text class="label" x="78" y="328">Verified Snapshot</text>
+  <text class="metric" x="78" y="360">circle + Stanley</text>
+  <text class="small" x="78" y="386">RMS CTE: 4.411 m</text>
+  <text class="small" x="78" y="410">Max |CTE|: 4.948 m</text>
+  <text class="small" x="78" y="434">RMS heading error: 0.694 rad</text>
+
+  <text class="small" x="504" y="484">Blue dashed: reference path. Orange: simulated trajectory. Metrics generated from local simulator run.</text>
+</svg>

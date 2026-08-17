@@ -4,27 +4,33 @@
   <meta charset="utf-8">
   
   
-  <title>智能车人工智能视觉组虚拟推箱子规划 | ZeXuan.io</title>
+  <title>智能车人工智能视觉组：视觉识别、地图规划与车端控制 | ZeXuan.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="一句话成果面向第二十一届全国大学生智能汽车竞赛人工智能视觉组，我整理并实现了一条从 OpenMV 屏幕图像调参、16x12 推箱子地图建模、BFS&#x2F;A* 路径规划 到 车端 JSON 命令输出 的原型链路，用于把虚拟推箱子任务拆成真实小车可以执行的 move_to、align_to_box、push_box 指令。 项目定位 方向: 机器视觉 &#x2F; 智能车 &#x2F; 路径规划">
+  <meta name="description" content="GOH ZE XUAN - Automation, Robotics, Embedded AI Portfolio">
 <meta property="og:type" content="article">
-<meta property="og:title" content="智能车人工智能视觉组虚拟推箱子规划">
+<meta property="og:title" content="智能车人工智能视觉组：视觉识别、地图规划与车端控制">
 <meta property="og:url" content="https://kittiyojiang.github.io/2026/06/09/AI-Vision-Smart-Car-Sokoban/index.html">
 <meta property="og:site_name" content="ZeXuan.io">
-<meta property="og:description" content="一句话成果面向第二十一届全国大学生智能汽车竞赛人工智能视觉组，我整理并实现了一条从 OpenMV 屏幕图像调参、16x12 推箱子地图建模、BFS&#x2F;A* 路径规划 到 车端 JSON 命令输出 的原型链路，用于把虚拟推箱子任务拆成真实小车可以执行的 move_to、align_to_box、push_box 指令。 项目定位 方向: 机器视觉 &#x2F; 智能车 &#x2F; 路径规划">
+<meta property="og:description" content="GOH ZE XUAN - Automation, Robotics, Embedded AI Portfolio">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kittiyojiang.github.io/images/smartcar/sokoban-planner-grid.svg">
+<meta property="og:image" content="https://kittiyojiang.github.io/images/smartcar/fomo-prediction-preview.jpg">
+<meta property="og:image" content="https://kittiyojiang.github.io/images/smartcar/map-detection-grid.png">
+<meta property="og:image" content="https://kittiyojiang.github.io/images/smartcar/threshold-calibration.png">
+<meta property="og:image" content="https://kittiyojiang.github.io/images/smartcar/fomo-learning-curves.png">
+<meta property="og:image" content="https://kittiyojiang.github.io/images/smartcar/wifi-serial-integration.png">
+<meta property="og:image" content="https://kittiyojiang.github.io/images/smartcar/fomo-openmv-detection.png">
 <meta property="og:image" content="https://kittiyojiang.github.io/images/smartcar/vision-control-pipeline.svg">
 <meta property="article:published_time" content="2026-06-09T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-09T04:25:44.352Z">
+<meta property="article:modified_time" content="2026-08-17T05:51:28.443Z">
 <meta property="article:author" content="GOH ZE XUAN">
-<meta property="article:tag" content="Computer Vision">
-<meta property="article:tag" content="OpenMV">
 <meta property="article:tag" content="Robotics">
-<meta property="article:tag" content="Path Planning">
+<meta property="article:tag" content="Computer Vision">
 <meta property="article:tag" content="Embedded Systems">
+<meta property="article:tag" content="TinyML">
+<meta property="article:tag" content="OpenMV">
+<meta property="article:tag" content="Path Planning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kittiyojiang.github.io/images/smartcar/sokoban-planner-grid.svg">
+<meta name="twitter:image" content="https://kittiyojiang.github.io/images/smartcar/fomo-prediction-preview.jpg">
   
   
     <link rel="shortcut icon" href="/favicon.svg">
@@ -41,7 +47,8 @@
   
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 
-<meta name="generator" content="Hexo 7.3.0">  <link rel="stylesheet" href="/css/custom.css">
+<meta name="generator" content="Hexo 7.3.0">  <meta name="keywords" content="Automation, Robotics, Embedded Systems, ROS2, Embedded AI, Smart Car Vision, STM32, TinyML, Industrial IoT">
+  <link rel="stylesheet" href="/css/custom.css">
 </head>
 
 <body>
@@ -66,13 +73,17 @@
         
           <a class="main-nav-link" href="/">Home</a>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-          <a class="main-nav-link" href="/about">About</a>
-        
           <a class="main-nav-link" href="/portfolio/">Portfolio</a>
         
-          <a class="main-nav-link" href="/resume">Resume</a>
+          <a class="main-nav-link" href="/evidence-vault/">Evidence Vault</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+          <a class="main-nav-link" href="/resume/">Resume</a>
+        
+          <a class="main-nav-link" target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG">GitHub</a>
         
       </nav>
       <nav id="sub-nav">
@@ -110,7 +121,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      智能车人工智能视觉组虚拟推箱子规划
+      智能车人工智能视觉组：视觉识别、地图规划与车端控制
     </h1>
   
 
@@ -118,18 +129,94 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="一句话成果"><a href="#一句话成果" class="headerlink" title="一句话成果"></a>一句话成果</h2><p>面向第二十一届全国大学生智能汽车竞赛人工智能视觉组，我整理并实现了一条从 <strong>OpenMV 屏幕图像调参</strong>、<strong>16x12 推箱子地图建模</strong>、<strong>BFS&#x2F;A* 路径规划</strong> 到 <strong>车端 JSON 命令输出</strong> 的原型链路，用于把虚拟推箱子任务拆成真实小车可以执行的 <code>move_to</code>、<code>align_to_box</code>、<code>push_box</code> 指令。</p>
+        <h2 id="一句话成果"><a href="#一句话成果" class="headerlink" title="一句话成果"></a>一句话成果</h2><p>面向第二十一届全国大学生智能汽车竞赛人工智能视觉组，我把 <strong>FOMO 轻量视觉模型</strong>、<strong>OpenART&#x2F;OpenMV 板端识别</strong>、<strong>16x12 地图建模</strong>、<strong>BFS&#x2F;A* 路径规划</strong> 与 <strong>RT1064 车端通信</strong> 串成一条可验证的工程链路，并保留了训练评估、实机识别、地图跟踪和通信联调证据。</p>
 <h3 id="项目定位"><a href="#项目定位" class="headerlink" title="项目定位"></a>项目定位</h3><ul>
-<li><strong>方向:</strong> 机器视觉 &#x2F; 智能车 &#x2F; 路径规划 &#x2F; 嵌入式系统</li>
-<li><strong>工具:</strong> Python、OpenMV、SmartCar VR V1.2、BFS、A*、JSON command interface</li>
-<li><strong>能力展示:</strong> 比赛规则拆解、视觉调参、地图抽象、搜索规划、指令编译、测试验证</li>
-<li><strong>当前状态:</strong> 已完成文本地图模拟器、规划器、命令消费者、OpenMV 暗屏调参脚本和官方调试环境接入记录</li>
+<li><strong>方向:</strong> 嵌入式机器视觉 &#x2F; 智能车 &#x2F; 路径规划 &#x2F; 软硬件联调</li>
+<li><strong>工具:</strong> Python、OpenART&#x2F;OpenMV、TensorFlow Lite、FOMO、SmartCar VR、BFS&#x2F;A*、RT1064、UART&#x2F;WiFi</li>
+<li><strong>能力展示:</strong> 数据与模型评估、板端部署、曝光与 ROI 调参、地图抽象、搜索规划、通信协议、测试验证</li>
+<li><strong>当前状态:</strong> 已完成角色&#x2F;数字识别录屏、地图定位与角度跟踪、FOMO 评估、规划器与命令消费者，以及 UART&#x2F;WiFi 联调记录</li>
+<li><strong>GitHub:</strong> <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/smCar">KITTIYOJIANG&#x2F;smCar</a></li>
 </ul>
 <span id="more"></span>
 
 <hr>
-<h2 id="系统总览"><a href="#系统总览" class="headerlink" title="系统总览"></a>系统总览</h2><p><img src="/images/smartcar/sokoban-planner-grid.svg" alt="AI Vision Smart Car Sokoban planner grid"></p>
-<p>这个项目不是简单地“让车动起来”，而是先把比赛任务拆成可验证的工程接口：视觉侧负责把屏幕里的虚拟场地转成地图，规划侧负责算出推箱子动作，车端只接收压缩后的动作命令。</p>
+<h2 id="系统总览"><a href="#系统总览" class="headerlink" title="系统总览"></a>系统总览</h2><p><img src="/images/smartcar/fomo-prediction-preview.jpg" alt="FOMO character detection prediction samples"></p>
+<p>这个项目不是简单地“让车动起来”，而是把训练、识别、定位、规划和通信拆成可独立验证的工程接口：视觉侧输出角色、数字、地图单元与车辆姿态，规划侧生成动作序列，车端通过串口&#x2F;WiFi 接收控制请求与结果。</p>
+<h2 id="真实运行证据"><a href="#真实运行证据" class="headerlink" title="真实运行证据"></a>真实运行证据</h2><p>下面的视频均由原始调试录屏压缩为网页版本，保留模型框选、串口输出、地图坐标和角度变化等关键画面。</p>
+<div class="video-evidence-grid">
+  <figure class="evidence-card">
+    <video controls preload="metadata" playsinline poster="/images/smartcar/character-detection-poster.jpg">
+      <source src="/videos/smartcar/character-detection-demo.mp4" type="video/mp4">
+      当前浏览器不支持内嵌视频播放。
+    </video>
+    <figcaption><strong>角色识别：</strong>OpenMV IDE 中对多类角色进行实时框选与分类输出。</figcaption>
+  </figure>
+  <figure class="evidence-card">
+    <video controls preload="metadata" playsinline poster="/images/smartcar/number-detection-poster.jpg">
+      <source src="/videos/smartcar/number-detection-demo.mp4" type="video/mp4">
+      当前浏览器不支持内嵌视频播放。
+    </video>
+    <figcaption><strong>数字识别：</strong>数字 0–9 的板端检测，画面同时展示 ROI、类别与置信信息。</figcaption>
+  </figure>
+  <figure class="evidence-card evidence-card-wide">
+    <video controls preload="metadata" playsinline poster="/images/smartcar/left-eye-tracking-poster.jpg">
+      <source src="/videos/smartcar/left-eye-tracking-demo.mp4" type="video/mp4">
+      当前浏览器不支持内嵌视频播放。
+    </video>
+    <figcaption><strong>左目地图跟踪：</strong>虚拟场地中连续输出车辆栅格坐标和角度，用于验证视觉定位到控制输入的接口。</figcaption>
+  </figure>
+</div>
+
+<div class="image-evidence-grid">
+  <figure class="evidence-card">
+    <img loading="lazy" src="/images/smartcar/map-detection-grid.png" alt="16 by 12 smart-car map grid detection overlay">
+    <figcaption>16×12 场地网格、墙体、目标和车辆位置叠加结果。</figcaption>
+  </figure>
+  <figure class="evidence-card">
+    <img loading="lazy" src="/images/smartcar/threshold-calibration.png" alt="OpenMV LAB threshold calibration for the smart-car field">
+    <figcaption>OpenMV LAB 阈值调参：原始画面与二值追踪结果并排验证。</figcaption>
+  </figure>
+  <figure class="evidence-card">
+    <img loading="lazy" src="/images/smartcar/fomo-learning-curves.png" alt="FOMO model loss and grid accuracy learning curves">
+    <figcaption>FOMO 训练曲线：验证集网格准确率最终稳定在约 95%。</figcaption>
+  </figure>
+  <figure class="evidence-card">
+    <img loading="lazy" src="/images/smartcar/wifi-serial-integration.png" alt="WiFi and UART integration success log">
+    <figcaption>WiFi/TCP 与 RT1064 UART4 链路联调成功日志。</figcaption>
+  </figure>
+</div>
+
+<h2 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h2><p><code>local_assets</code> 中保留了 FOMO 单阶段模型的完整评估产物。网页只展示关键结果，原始报告和模型文件继续留在本地工程目录中。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th align="right">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总样本</td>
+<td align="right">1,151</td>
+</tr>
+<tr>
+<td>训练 &#x2F; 验证</td>
+<td align="right">917 &#x2F; 234</td>
+</tr>
+<tr>
+<td>验证集分类准确率</td>
+<td align="right">93.59%</td>
+</tr>
+<tr>
+<td>中心网格定位准确率</td>
+<td align="right">100%</td>
+</tr>
+<tr>
+<td>分类与定位同时正确</td>
+<td align="right">93.59%</td>
+</tr>
+</tbody></table>
+<p><img src="/images/smartcar/fomo-openmv-detection.png" alt="OpenMV FOMO detection running on the competition scene"></p>
+<p>评估样例中同时保留了成功与失败案例，便于定位相似角色、尺度变化和画面边缘目标造成的误判，而不是只展示“最好看”的结果。</p>
 <h2 id="Vision-to-Control-链路"><a href="#Vision-to-Control-链路" class="headerlink" title="Vision-to-Control 链路"></a>Vision-to-Control 链路</h2><p><img src="/images/smartcar/vision-control-pipeline.svg" alt="Smart car vision control pipeline"></p>
 <p>核心链路分为五层：</p>
 <ol>
@@ -230,11 +317,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kittiyojiang.github.io/2026/06/09/AI-Vision-Smart-Car-Sokoban/" data-id="cmq6762ou0001e0v4gat59gmp" data-title="智能车人工智能视觉组虚拟推箱子规划" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://kittiyojiang.github.io/2026/06/09/AI-Vision-Smart-Car-Sokoban/" data-id="cmqgk967i001wiov452eg7u6n" data-title="智能车人工智能视觉组：视觉识别、地图规划与车端控制" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Computer-Vision/" rel="tag">Computer Vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Embedded-Systems/" rel="tag">Embedded Systems</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenMV/" rel="tag">OpenMV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Path-Planning/" rel="tag">Path Planning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Robotics/" rel="tag">Robotics</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Computer-Vision/" rel="tag">Computer Vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Embedded-Systems/" rel="tag">Embedded Systems</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenMV/" rel="tag">OpenMV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Path-Planning/" rel="tag">Path Planning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Robotics/" rel="tag">Robotics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TinyML/" rel="tag">TinyML</a></li></ul>
 
     </footer>
   </div>
@@ -242,10 +329,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2026/06/14/Gomoku-Robot-Vision-AI-Arm/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          五子棋机器人：视觉识别、AI 决策与机械臂落子闭环
+        
+      </div>
+    </a>
   
-    <a href="/2026/03/10/Webots-ROS2-Robot-Navigation/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2026/05/23/Path-Tracking-Simulator-Pure-Pursuit-Stanley/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">后一篇</strong>
-      <div class="article-nav-title">ROS2 Nav2 移动机器人导航仿真</div>
+      <div class="article-nav-title">路径跟踪仿真：Pure Pursuit 与 Stanley 控制器对比</div>
     </a>
   
 </nav>
@@ -262,7 +358,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/">Portfolio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Embedded-Projects/">Embedded Projects</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Industrial-IoT/">Industrial IoT</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Robotics/">Robotics</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/">Portfolio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Control/">Control</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Embedded-Projects/">Embedded Projects</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Industrial-IoT/">Industrial IoT</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Robotics/">Robotics</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -272,7 +368,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Automation/" rel="tag">Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/" rel="tag">CNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer-Vision/" rel="tag">Computer Vision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Control/" rel="tag">Control</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dashboard/" rel="tag">Dashboard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded-AI/" rel="tag">Embedded AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded-Systems/" rel="tag">Embedded Systems</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IIoT/" rel="tag">IIoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monitoring/" rel="tag">Monitoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Navigation/" rel="tag">Navigation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenMV/" rel="tag">OpenMV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Path-Planning/" rel="tag">Path Planning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ROS2/" rel="tag">ROS2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Robotics/" rel="tag">Robotics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sensor-Data/" rel="tag">Sensor Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyML/" rel="tag">TinyML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webots/" rel="tag">Webots</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Automation/" rel="tag">Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Autonomous-Driving/" rel="tag">Autonomous Driving</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/" rel="tag">CNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer-Vision/" rel="tag">Computer Vision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Control/" rel="tag">Control</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dashboard/" rel="tag">Dashboard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded-AI/" rel="tag">Embedded AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded-Systems/" rel="tag">Embedded Systems</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOC/" rel="tag">FOC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IIoT/" rel="tag">IIoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manipulator/" rel="tag">Manipulator</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monitoring/" rel="tag">Monitoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Motor-Control/" rel="tag">Motor Control</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Navigation/" rel="tag">Navigation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/" rel="tag">OpenCV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenMV/" rel="tag">OpenMV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PID/" rel="tag">PID</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Path-Planning/" rel="tag">Path Planning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Path-Tracking/" rel="tag">Path Tracking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyQt/" rel="tag">PyQt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ROS2/" rel="tag">ROS2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Robotics/" rel="tag">Robotics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sensor-Data/" rel="tag">Sensor Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Simulation/" rel="tag">Simulation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyML/" rel="tag">TinyML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webots/" rel="tag">Webots</a></li></ul>
     </div>
   </div>
 
@@ -282,7 +378,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Automation/" style="font-size: 10px;">Automation</a> <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/Computer-Vision/" style="font-size: 10px;">Computer Vision</a> <a href="/tags/Control/" style="font-size: 10px;">Control</a> <a href="/tags/Dashboard/" style="font-size: 10px;">Dashboard</a> <a href="/tags/Embedded-AI/" style="font-size: 10px;">Embedded AI</a> <a href="/tags/Embedded-Systems/" style="font-size: 10px;">Embedded Systems</a> <a href="/tags/IIoT/" style="font-size: 10px;">IIoT</a> <a href="/tags/Monitoring/" style="font-size: 10px;">Monitoring</a> <a href="/tags/Navigation/" style="font-size: 10px;">Navigation</a> <a href="/tags/OpenMV/" style="font-size: 10px;">OpenMV</a> <a href="/tags/Path-Planning/" style="font-size: 10px;">Path Planning</a> <a href="/tags/ROS2/" style="font-size: 10px;">ROS2</a> <a href="/tags/Robotics/" style="font-size: 20px;">Robotics</a> <a href="/tags/STM32/" style="font-size: 10px;">STM32</a> <a href="/tags/Sensor-Data/" style="font-size: 10px;">Sensor Data</a> <a href="/tags/TinyML/" style="font-size: 10px;">TinyML</a> <a href="/tags/Webots/" style="font-size: 10px;">Webots</a>
+      <a href="/tags/Automation/" style="font-size: 10px;">Automation</a> <a href="/tags/Autonomous-Driving/" style="font-size: 10px;">Autonomous Driving</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/Computer-Vision/" style="font-size: 15px;">Computer Vision</a> <a href="/tags/Control/" style="font-size: 20px;">Control</a> <a href="/tags/Dashboard/" style="font-size: 10px;">Dashboard</a> <a href="/tags/Embedded-AI/" style="font-size: 10px;">Embedded AI</a> <a href="/tags/Embedded-Systems/" style="font-size: 15px;">Embedded Systems</a> <a href="/tags/FOC/" style="font-size: 10px;">FOC</a> <a href="/tags/IIoT/" style="font-size: 10px;">IIoT</a> <a href="/tags/Manipulator/" style="font-size: 10px;">Manipulator</a> <a href="/tags/Monitoring/" style="font-size: 10px;">Monitoring</a> <a href="/tags/Motor-Control/" style="font-size: 10px;">Motor Control</a> <a href="/tags/Navigation/" style="font-size: 10px;">Navigation</a> <a href="/tags/OpenCV/" style="font-size: 10px;">OpenCV</a> <a href="/tags/OpenMV/" style="font-size: 10px;">OpenMV</a> <a href="/tags/PID/" style="font-size: 10px;">PID</a> <a href="/tags/Path-Planning/" style="font-size: 10px;">Path Planning</a> <a href="/tags/Path-Tracking/" style="font-size: 10px;">Path Tracking</a> <a href="/tags/PyQt/" style="font-size: 10px;">PyQt</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/ROS2/" style="font-size: 10px;">ROS2</a> <a href="/tags/Robotics/" style="font-size: 20px;">Robotics</a> <a href="/tags/STM32/" style="font-size: 15px;">STM32</a> <a href="/tags/Sensor-Data/" style="font-size: 10px;">Sensor Data</a> <a href="/tags/Simulation/" style="font-size: 10px;">Simulation</a> <a href="/tags/TinyML/" style="font-size: 15px;">TinyML</a> <a href="/tags/Webots/" style="font-size: 10px;">Webots</a>
     </div>
   </div>
 
@@ -291,7 +387,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">三月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">一月 2026</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">三月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">一月 2026</a></li></ul>
     </div>
   </div>
 
@@ -304,19 +400,23 @@
       <ul>
         
           <li>
-            <a href="/2026/06/09/AI-Vision-Smart-Car-Sokoban/">智能车人工智能视觉组虚拟推箱子规划</a>
+            <a href="/2026/06/14/Gomoku-Robot-Vision-AI-Arm/">五子棋机器人：视觉识别、AI 决策与机械臂落子闭环</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/09/AI-Vision-Smart-Car-Sokoban/">智能车人工智能视觉组：视觉识别、地图规划与车端控制</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/23/Path-Tracking-Simulator-Pure-Pursuit-Stanley/">路径跟踪仿真：Pure Pursuit 与 Stanley 控制器对比</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/17/FOC-Control-Math-Core/">FOC 控制数学核心：Clarke/Park 变换与 PID SIL 验证</a>
           </li>
         
           <li>
             <a href="/2026/03/10/Webots-ROS2-Robot-Navigation/">ROS2 Nav2 移动机器人导航仿真</a>
-          </li>
-        
-          <li>
-            <a href="/2026/02/20/SmartLine-IoT-Production-Monitoring/">SmartLine-IoT 工业物联网产线状态监测系统</a>
-          </li>
-        
-          <li>
-            <a href="/2026/01/26/STM32F103-TinyCNN-Project/">STM32F103 TinyCNN 手写数字识别</a>
           </li>
         
       </ul>
@@ -343,13 +443,17 @@
   
     <a href="/" class="mobile-nav-link">Home</a>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
     <a href="/portfolio/" class="mobile-nav-link">Portfolio</a>
   
-    <a href="/resume" class="mobile-nav-link">Resume</a>
+    <a href="/evidence-vault/" class="mobile-nav-link">Evidence Vault</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/resume/" class="mobile-nav-link">Resume</a>
+  
+    <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG" class="mobile-nav-link">GitHub</a>
   
 </nav>
     

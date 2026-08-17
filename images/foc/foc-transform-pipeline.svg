@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" role="img" aria-labelledby="title desc">
+  <title id="title">FOC transform and PID pipeline</title>
+  <desc id="desc">A field oriented control math pipeline from UVW phase currents through Clarke and Park transforms to dq current control and inverse Park output.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; }
+      .focus { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; rx: 8; }
+      .ok { fill: #ecfdf5; stroke: #059669; stroke-width: 2; rx: 8; }
+      .title { font: 700 24px Arial, sans-serif; fill: #0f172a; }
+      .label { font: 700 18px Arial, sans-serif; fill: #1e293b; }
+      .small { font: 14px Arial, sans-serif; fill: #475569; }
+      .code { font: 700 15px Consolas, monospace; fill: #0f766e; }
+      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .axis { stroke: #64748b; stroke-width: 2; marker-end: url(#arrow); }
+      .waveA { fill: none; stroke: #2563eb; stroke-width: 4; }
+      .waveB { fill: none; stroke: #ea580c; stroke-width: 4; }
+      .waveC { fill: none; stroke: #16a34a; stroke-width: 4; }
+    </style>
+  </defs>
+  <rect class="bg" width="1120" height="520"/>
+  <text class="title" x="48" y="58">FOC Math Core: Clarke / Park / PID SIL</text>
+  <text class="small" x="50" y="84">Pure C99, float32, no dynamic allocation, software-in-the-loop verification</text>
+
+  <rect class="panel" x="54" y="132" width="196" height="126"/>
+  <text class="label" x="82" y="166">UVW Phase</text>
+  <path class="waveA" d="M84 205 C106 174 128 236 150 205 S194 174 216 205"/>
+  <path class="waveB" d="M84 220 C106 189 128 251 150 220 S194 189 216 220"/>
+  <path class="waveC" d="M84 235 C106 204 128 266 150 235 S194 204 216 235"/>
+
+  <rect class="focus" x="312" y="132" width="196" height="126"/>
+  <text class="label" x="340" y="166">Clarke</text>
+  <text class="code" x="340" y="198">UVW -> alpha/beta</text>
+  <text class="small" x="340" y="224">balanced 3-phase input</text>
+
+  <rect class="focus" x="570" y="132" width="196" height="126"/>
+  <text class="label" x="598" y="166">Park</text>
+  <text class="code" x="598" y="198">alpha/beta -> d/q</text>
+  <text class="small" x="598" y="224">uses sin(theta), cos(theta)</text>
+
+  <rect class="ok" x="828" y="132" width="238" height="126"/>
+  <text class="label" x="856" y="166">Current PID</text>
+  <text class="code" x="856" y="198">anti-windup clamp</text>
+  <text class="small" x="856" y="224">1 kHz SIL loop</text>
+
+  <path class="line" d="M250 195 H302"/>
+  <path class="line" d="M508 195 H560"/>
+  <path class="line" d="M766 195 H818"/>
+
+  <rect class="panel" x="80" y="326" width="300" height="120"/>
+  <text class="label" x="108" y="360">SIL Transform Result</text>
+  <text class="code" x="108" y="392">Ialpha = +1.000000 A</text>
+  <text class="code" x="108" y="418">Id = +0.707107 A</text>
+
+  <rect class="panel" x="442" y="326" width="300" height="120"/>
+  <text class="label" x="470" y="360">PID Safety Shape</text>
+  <text class="small" x="470" y="392">integral limit</text>
+  <text class="small" x="470" y="418">output range: -12.0 to +12.0</text>
+
+  <rect class="panel" x="806" y="326" width="236" height="120"/>
+  <text class="label" x="834" y="360">Embedded Fit</text>
+  <text class="small" x="834" y="392">static structs</text>
+  <text class="small" x="834" y="418">portable C interface</text>
+
+  <line class="axis" x1="556" y1="308" x2="654" y2="308"/>
+  <line class="axis" x1="556" y1="308" x2="556" y2="254"/>
+  <text class="small" x="660" y="312">q</text>
+  <text class="small" x="546" y="250">d</text>
+  <line x1="556" y1="308" x2="616" y2="272" stroke="#ea580c" stroke-width="5"/>
+</svg>

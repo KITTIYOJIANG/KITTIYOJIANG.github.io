@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>路径跟踪仿真：Pure Pursuit 与 Stanley 控制器对比 | ZeXuan.io</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="GOH ZE XUAN - Automation, Robotics, Embedded AI Portfolio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="路径跟踪仿真：Pure Pursuit 与 Stanley 控制器对比">
+<meta property="og:url" content="https://kittiyojiang.github.io/2026/05/23/Path-Tracking-Simulator-Pure-Pursuit-Stanley/index.html">
+<meta property="og:site_name" content="ZeXuan.io">
+<meta property="og:description" content="GOH ZE XUAN - Automation, Robotics, Embedded AI Portfolio">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kittiyojiang.github.io/images/path-tracking/control-loop.svg">
+<meta property="article:published_time" content="2026-05-23T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-16T06:30:41.655Z">
+<meta property="article:author" content="GOH ZE XUAN">
+<meta property="article:tag" content="Control">
+<meta property="article:tag" content="Autonomous Driving">
+<meta property="article:tag" content="Path Tracking">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Simulation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kittiyojiang.github.io/images/path-tracking/control-loop.svg">
+  
+  
+    <link rel="shortcut icon" href="/favicon.svg">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0">  <meta name="keywords" content="Automation, Robotics, Embedded Systems, ROS2, Embedded AI, Smart Car Vision, STM32, TinyML, Industrial IoT">
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ZeXuan.io</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Automation | Robot Control | Embedded Systems</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/portfolio/">Portfolio</a>
+        
+          <a class="main-nav-link" href="/evidence-vault/">Evidence Vault</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+          <a class="main-nav-link" href="/resume/">Resume</a>
+        
+          <a class="main-nav-link" target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG">GitHub</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          
+            <a class="nav-icon" target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG"><span class="fa fa-github"></span></a>
+          
+        
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://kittiyojiang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Path-Tracking-Simulator-Pure-Pursuit-Stanley" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/23/Path-Tracking-Simulator-Pure-Pursuit-Stanley/" class="article-date">
+  <time class="dt-published" datetime="2026-05-23T04:00:00.000Z" itemprop="datePublished">2026-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Portfolio/">Portfolio</a>►<a class="article-category-link" href="/categories/Portfolio/Control/">Control</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      路径跟踪仿真：Pure Pursuit 与 Stanley 控制器对比
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一句话成果"><a href="#一句话成果" class="headerlink" title="一句话成果"></a>一句话成果</h2><p>我实现了一个 2D 车辆路径跟踪仿真器，用运动学自行车模型验证 <strong>Pure Pursuit</strong> 和 <strong>Stanley</strong> 控制器在圆轨迹与 8 字轨迹上的跟踪效果，并输出横向误差、航向误差和转向角等指标。</p>
+<h3 id="项目定位"><a href="#项目定位" class="headerlink" title="项目定位"></a>项目定位</h3><ul>
+<li><strong>方向:</strong> 控制算法 &#x2F; 自动驾驶基础 &#x2F; 智能车仿真</li>
+<li><strong>工具:</strong> Python、NumPy、Matplotlib、kinematic bicycle model</li>
+<li><strong>GitHub:</strong> <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG/path_tracking_sim">KITTIYOJIANG&#x2F;path_tracking_sim</a></li>
+<li><strong>能力展示:</strong> 控制器建模、误差定义、仿真循环、指标评估、可视化调试</li>
+<li><strong>当前状态:</strong> 支持圆轨迹、8 字轨迹、Pure Pursuit、Stanley、静态绘图和动画入口</li>
+</ul>
+<span id="more"></span>
+
+<hr>
+<h2 id="系统总览"><a href="#系统总览" class="headerlink" title="系统总览"></a>系统总览</h2><p><img src="/images/path-tracking/control-loop.svg" alt="Path tracking simulator control loop"></p>
+<p>这个项目的目标不是追求复杂界面，而是保留一个足够清楚的控制算法实验台：给定参考路径，控制器根据当前车辆状态输出转向角，车辆模型推进状态，再用横向误差和航向误差评估控制效果。</p>
+<h2 id="控制链路"><a href="#控制链路" class="headerlink" title="控制链路"></a>控制链路</h2><ol>
+<li><strong>路径生成:</strong> 支持圆轨迹和 8 字轨迹，输出离散 waypoint。</li>
+<li><strong>车辆模型:</strong> 使用 2D 运动学自行车模型，状态包含 <code>x</code>、<code>y</code>、<code>yaw</code> 和速度。</li>
+<li><strong>控制器:</strong> 实现 Pure Pursuit 与 Stanley，两者可通过统一入口切换。</li>
+<li><strong>仿真循环:</strong> 每个时间步计算最近路径点、路径切线、横向误差、航向误差和转向角。</li>
+<li><strong>指标评估:</strong> 输出 RMS CTE、最大绝对 CTE 和 RMS heading error。</li>
+</ol>
+<h2 id="本地验证数据"><a href="#本地验证数据" class="headerlink" title="本地验证数据"></a>本地验证数据</h2><p>我用同一套仿真入口跑了 30 秒对比，得到如下快照：</p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>控制器</th>
+<th align="right">RMS CTE</th>
+<th align="right">Max |CTE|</th>
+<th align="right">RMS heading error</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>circle</td>
+<td>Pure Pursuit</td>
+<td align="right">9.027 m</td>
+<td align="right">19.050 m</td>
+<td align="right">1.116 rad</td>
+</tr>
+<tr>
+<td>circle</td>
+<td>Stanley</td>
+<td align="right">4.411 m</td>
+<td align="right">4.948 m</td>
+<td align="right">0.694 rad</td>
+</tr>
+<tr>
+<td>eight</td>
+<td>Pure Pursuit</td>
+<td align="right">10.195 m</td>
+<td align="right">20.936 m</td>
+<td align="right">1.180 rad</td>
+</tr>
+<tr>
+<td>eight</td>
+<td>Stanley</td>
+<td align="right">12.126 m</td>
+<td align="right">23.412 m</td>
+<td align="right">1.258 rad</td>
+</tr>
+</tbody></table>
+<p>这些数字不是为了说明哪个控制器“绝对更好”，而是说明当前仿真器已经可以暴露参数、初始条件和路径形状对控制效果的影响。下一步可以继续做参数扫描和自动调参。</p>
+<h2 id="核心实现"><a href="#核心实现" class="headerlink" title="核心实现"></a>核心实现</h2><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>path_tracking/models.py</code></td>
+<td>车辆状态与运动学自行车模型</td>
+</tr>
+<tr>
+<td><code>path_tracking/controller.py</code></td>
+<td>Pure Pursuit、Stanley 和最近路径点搜索</td>
+</tr>
+<tr>
+<td><code>path_tracking/path.py</code></td>
+<td>圆轨迹与 8 字轨迹生成</td>
+</tr>
+<tr>
+<td><code>path_tracking/simulator.py</code></td>
+<td>仿真循环、误差记录、绘图</td>
+</tr>
+<tr>
+<td><code>run_sim.py</code></td>
+<td>统一命令行入口，支持路径、控制器、仿真时长和动画模式</td>
+</tr>
+</tbody></table>
+<p>常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python run_sim.py --path circle --controller pp</span><br><span class="line">python run_sim.py --path circle --controller stanley --sim-time 30</span><br><span class="line">python run_sim.py --path eight --controller stanley --anim</span><br></pre></td></tr></table></figure>
+
+<h2 id="我的职责"><a href="#我的职责" class="headerlink" title="我的职责"></a>我的职责</h2><ul>
+<li>抽象车辆状态、控制器和路径生成接口，避免把算法写成一次性脚本。</li>
+<li>实现 Pure Pursuit 与 Stanley 控制器，并统一接入同一个仿真循环。</li>
+<li>定义横向误差与航向误差的计算方式，使控制效果可以量化比较。</li>
+<li>增加命令行入口，让不同路径、控制器和仿真时长可以快速切换。</li>
+</ul>
+<h2 id="这个项目想证明什么"><a href="#这个项目想证明什么" class="headerlink" title="这个项目想证明什么"></a>这个项目想证明什么</h2><p>这个项目适合放在作品集中证明我的控制基础：我不只会调用现成仿真环境，也能自己搭一个最小可验证系统，清楚定义车辆模型、控制输入、误差指标和可视化输出。对于智能车、机器人和自动驾驶方向，这是很好的基础能力证据。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kittiyojiang.github.io/2026/05/23/Path-Tracking-Simulator-Pure-Pursuit-Stanley/" data-id="cmqgk96730007iov4d29zdty9" data-title="路径跟踪仿真：Pure Pursuit 与 Stanley 控制器对比" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Autonomous-Driving/" rel="tag">Autonomous Driving</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Control/" rel="tag">Control</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Path-Tracking/" rel="tag">Path Tracking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Simulation/" rel="tag">Simulation</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/06/09/AI-Vision-Smart-Car-Sokoban/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          智能车人工智能视觉组：视觉识别、地图规划与车端控制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/05/17/FOC-Control-Math-Core/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">FOC 控制数学核心：Clarke/Park 变换与 PID SIL 验证</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/">Portfolio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Control/">Control</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Embedded-Projects/">Embedded Projects</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Industrial-IoT/">Industrial IoT</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Portfolio/Robotics/">Robotics</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Automation/" rel="tag">Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Autonomous-Driving/" rel="tag">Autonomous Driving</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/" rel="tag">CNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer-Vision/" rel="tag">Computer Vision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Control/" rel="tag">Control</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dashboard/" rel="tag">Dashboard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded-AI/" rel="tag">Embedded AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded-Systems/" rel="tag">Embedded Systems</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOC/" rel="tag">FOC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IIoT/" rel="tag">IIoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manipulator/" rel="tag">Manipulator</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monitoring/" rel="tag">Monitoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Motor-Control/" rel="tag">Motor Control</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Navigation/" rel="tag">Navigation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/" rel="tag">OpenCV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenMV/" rel="tag">OpenMV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PID/" rel="tag">PID</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Path-Planning/" rel="tag">Path Planning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Path-Tracking/" rel="tag">Path Tracking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyQt/" rel="tag">PyQt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ROS2/" rel="tag">ROS2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Robotics/" rel="tag">Robotics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STM32/" rel="tag">STM32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sensor-Data/" rel="tag">Sensor Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Simulation/" rel="tag">Simulation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyML/" rel="tag">TinyML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webots/" rel="tag">Webots</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Automation/" style="font-size: 10px;">Automation</a> <a href="/tags/Autonomous-Driving/" style="font-size: 10px;">Autonomous Driving</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/Computer-Vision/" style="font-size: 15px;">Computer Vision</a> <a href="/tags/Control/" style="font-size: 20px;">Control</a> <a href="/tags/Dashboard/" style="font-size: 10px;">Dashboard</a> <a href="/tags/Embedded-AI/" style="font-size: 10px;">Embedded AI</a> <a href="/tags/Embedded-Systems/" style="font-size: 15px;">Embedded Systems</a> <a href="/tags/FOC/" style="font-size: 10px;">FOC</a> <a href="/tags/IIoT/" style="font-size: 10px;">IIoT</a> <a href="/tags/Manipulator/" style="font-size: 10px;">Manipulator</a> <a href="/tags/Monitoring/" style="font-size: 10px;">Monitoring</a> <a href="/tags/Motor-Control/" style="font-size: 10px;">Motor Control</a> <a href="/tags/Navigation/" style="font-size: 10px;">Navigation</a> <a href="/tags/OpenCV/" style="font-size: 10px;">OpenCV</a> <a href="/tags/OpenMV/" style="font-size: 10px;">OpenMV</a> <a href="/tags/PID/" style="font-size: 10px;">PID</a> <a href="/tags/Path-Planning/" style="font-size: 10px;">Path Planning</a> <a href="/tags/Path-Tracking/" style="font-size: 10px;">Path Tracking</a> <a href="/tags/PyQt/" style="font-size: 10px;">PyQt</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/ROS2/" style="font-size: 10px;">ROS2</a> <a href="/tags/Robotics/" style="font-size: 20px;">Robotics</a> <a href="/tags/STM32/" style="font-size: 15px;">STM32</a> <a href="/tags/Sensor-Data/" style="font-size: 10px;">Sensor Data</a> <a href="/tags/Simulation/" style="font-size: 10px;">Simulation</a> <a href="/tags/TinyML/" style="font-size: 15px;">TinyML</a> <a href="/tags/Webots/" style="font-size: 10px;">Webots</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">三月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">一月 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/06/14/Gomoku-Robot-Vision-AI-Arm/">五子棋机器人：视觉识别、AI 决策与机械臂落子闭环</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/09/AI-Vision-Smart-Car-Sokoban/">智能车人工智能视觉组：视觉识别、地图规划与车端控制</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/23/Path-Tracking-Simulator-Pure-Pursuit-Stanley/">路径跟踪仿真：Pure Pursuit 与 Stanley 控制器对比</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/17/FOC-Control-Math-Core/">FOC 控制数学核心：Clarke/Park 变换与 PID SIL 验证</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/10/Webots-ROS2-Robot-Navigation/">ROS2 Nav2 移动机器人导航仿真</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 GOH ZE XUAN<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/portfolio/" class="mobile-nav-link">Portfolio</a>
+  
+    <a href="/evidence-vault/" class="mobile-nav-link">Evidence Vault</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/resume/" class="mobile-nav-link">Resume</a>
+  
+    <a target="_blank" rel="noopener" href="https://github.com/KITTIYOJIANG" class="mobile-nav-link">GitHub</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
